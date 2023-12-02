@@ -2,25 +2,24 @@ package solutions
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func Day_1() {
-	numberStrings := map[string]int{
-		"zero":  0,
-		"one":   1,
-		"two":   2,
-		"three": 3,
-		"four":  4,
-		"five":  5,
-		"six":   6,
-		"seven": 7,
-		"eight": 8,
-		"nine":  9,
-	}
+var numberStrings = map[string]int{
+	"zero":  0,
+	"one":   1,
+	"two":   2,
+	"three": 3,
+	"four":  4,
+	"five":  5,
+	"six":   6,
+	"seven": 7,
+	"eight": 8,
+	"nine":  9,
+}
 
+func Day_1() error {
 	longestNumberStringCount := 5
 	smallestNumberStringCount := 3
 
@@ -55,13 +54,12 @@ func Day_1() {
 		}
 
 		joined, err := strconv.Atoi(fmt.Sprintf("%d%d", numericalLettersAcc[0], numericalLettersAcc[len(numericalLettersAcc)-1]))
-		if err != nil {
-			fmt.Println("An error occured parsing the joined numbers")
-			os.Exit(1)
-		}
+		// e("An error occured parsing the joined numbers")
+		if err != nil { return err }
 		cumSum += joined
 	}
 
 	fmt.Println()
 	fmt.Println(cumSum)
+	return nil
 }

@@ -2,8 +2,13 @@ package solutions
 
 import (
 	"bufio"
+	"errors"
 	"os"
 )
+
+func InputError(msg string) error {
+	return errors.New("Invalid input: " + msg)
+}
 
 func Input() []string {
 	var lines []string

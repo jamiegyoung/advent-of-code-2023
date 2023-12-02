@@ -14,6 +14,11 @@ func (e SelectionError) Error() string {
 	return fmt.Sprintln("User inputted, %s: %s", e.Field, e.Msg)
 }
 
+var days = map[string]func() error{
+	"1": solutions.Day_1,
+	"2": solutions.Day_2,
+}
+
 func main() {
 	fmt.Print("Please enter a day to run: ")
 
@@ -25,17 +30,16 @@ func main() {
 		return
 	}
 
-	solutions := map[string]func(){
-		"1": solutions.Day_1,
-	}
-
 	// check function exists
-	var foundSol = solutions[day]
+	var foundSol = days[day]
 
 	if foundSol == nil {
 		fmt.Println("Day", day, "has not been solved")
 		return
 	}
 
-	foundSol()
+	err := foundSol()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
