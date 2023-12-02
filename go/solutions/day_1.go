@@ -23,6 +23,8 @@ func Day_1() error {
 	longestNumberStringCount := 5
 	smallestNumberStringCount := 3
 
+	fmt.Println("Please enter a list of numbers and words seperated by newlines(e.g. 1two3four, 123, one, 1threeighthree):")
+
 	lines := Input()
 	cumSum := 0
 
@@ -47,15 +49,26 @@ func Day_1() error {
 
 				subString := line[i : i+j]
 				if numberStrings[subString] != 0 {
-					numericalLettersAcc = append(numericalLettersAcc, numberStrings[subString])
+					numericalLettersAcc = append(
+						numericalLettersAcc,
+						numberStrings[subString],
+					)
 					continue
 				}
 			}
 		}
 
-		joined, err := strconv.Atoi(fmt.Sprintf("%d%d", numericalLettersAcc[0], numericalLettersAcc[len(numericalLettersAcc)-1]))
+		joined, err := strconv.Atoi(
+			fmt.Sprintf(
+				"%d%d",
+				numericalLettersAcc[0],
+				numericalLettersAcc[len(numericalLettersAcc)-1],
+			),
+		)
 		// e("An error occured parsing the joined numbers")
-		if err != nil { return err }
+		if err != nil {
+			return err
+		}
 		cumSum += joined
 	}
 
