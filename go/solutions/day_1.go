@@ -18,7 +18,6 @@ var numberStrings = map[string]int{
 	"eight": 8,
 	"nine":  9,
 }
-
 func Day_1() error {
 	longestNumberStringCount := 5
 	smallestNumberStringCount := 3
