@@ -49,7 +49,7 @@ func generateLimitsMap() (map[string]int, error) {
 	return limits, nil
 }
 
-func Day_2() error {
+func Day2() error {
 	limits, err := generateLimitsMap()
 	if err != nil {
 		return err
