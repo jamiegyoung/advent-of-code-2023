@@ -7,6 +7,23 @@ import (
 	"strings"
 )
 
+type point3 struct {
+	rowIndex int
+	min      int
+	max      int
+}
+
+type pointArr3 []point3
+
+func (s pointArr3) contains(e point3) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
 func inRange3(min int, max int, min2 int, max2 int) bool {
 	// check if any number is within the range of the other
 	aInB := min >= min2 && min <= max2
@@ -20,7 +37,7 @@ func solveRow3(
 	i int,
 	strings []string,
 	symbolIndex int,
-	foundIndexes map[string]bool,
+	foundIndexes pointArr3,
 	acc *int,
 	margin int,
 ) error {
@@ -38,17 +55,16 @@ func solveRow3(
 		min := otherRowNumIndexRange[0]
 		max := otherRowNumIndexRange[1] - 1
 
-		// this is awful
-		uniqueForNum := fmt.Sprintf("%d,%d,%d", rowIndex, min, max)
+		point := point3{rowIndex, min, max}
 
-		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes[uniqueForNum] {
+		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
 			number, err := strconv.Atoi(row[otherRowNumIndexRange[0]:otherRowNumIndexRange[1]])
 			if err != nil {
 				return err
 			}
 
 			fmt.Println("Adding number", number, *acc)
-			foundIndexes[uniqueForNum] = true
+			foundIndexes = append(foundIndexes, point)
 			*acc += number
 		}
 	}
@@ -57,7 +73,7 @@ func solveRow3(
 
 func solve3(strings []string) error {
 	acc := 0
-	foundIndexes := map[string]bool{}
+	foundIndexes := pointArr3{}
 	for strIndex, str := range strings {
 		reg := regexp.MustCompile(`[^0-9.]`)
 

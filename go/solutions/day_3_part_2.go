@@ -19,7 +19,7 @@ func solveRow3Point5(
 	i int,
 	strings []string,
 	symbolIndex int,
-	foundIndexes map[string]bool,
+	foundIndexes pointArr3,
 	margin int,
 ) ([]int, error) {
 	rowIndex := strIndex + i
@@ -39,15 +39,15 @@ func solveRow3Point5(
 		max := otherRowNumIndexRange[1] - 1
 
 		// this is awful
-		uniqueForNum := fmt.Sprintf("%d,%d,%d", rowIndex, min, max)
+		point := point3{rowIndex, min, max}
 
-		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes[uniqueForNum] {
+		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
 			number, err := strconv.Atoi(row[otherRowNumIndexRange[0]:otherRowNumIndexRange[1]])
 			if err != nil {
 				return nil, err
 			}
 
-			foundIndexes[uniqueForNum] = true
+			foundIndexes = append(foundIndexes, point)
 			adjacent = append(adjacent, number)
 		}
 	}
@@ -56,7 +56,7 @@ func solveRow3Point5(
 
 func solve3Point5(strings []string) (int, error) {
 	acc := 0
-	foundIndexes := map[string]bool{}
+	foundIndexes := pointArr3{}
 	for strIndex, str := range strings {
 		reg := regexp.MustCompile(`\*`)
 
