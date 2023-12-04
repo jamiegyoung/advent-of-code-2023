@@ -4,6 +4,7 @@ import (
 	"advent_of_code/day1"
 	"advent_of_code/day2"
 	"advent_of_code/day3"
+	"advent_of_code/day4"
 	"fmt"
 )
 
@@ -12,6 +13,7 @@ var days = map[string]func() error{
 	"2":   day2.Day2,
 	"3":   day3.Part1,
 	"3.5": day3.Part2,
+  "4": day4.Part1,
 }
 
 func main() {
