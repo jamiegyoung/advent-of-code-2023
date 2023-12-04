@@ -1,25 +1,18 @@
-package solutions
+package day3
 
 import (
+	"advent_of_code/common"
 	"fmt"
 	"regexp"
 	"strconv"
 )
 
-func inRange3Point5(min int, max int, min2 int, max2 int) bool {
-	// check if any number is within the range of the other
-	aInB := min >= min2 && min <= max2
-	bInA := min2 >= min && min2 <= max
-
-	return aInB || bInA
-}
-
-func solveRow3Point5(
+func solveRowAlt(
 	strIndex int,
 	i int,
 	strings []string,
 	symbolIndex int,
-	foundIndexes pointArr3,
+	foundIndexes pointArr,
 	margin int,
 ) ([]int, error) {
 	rowIndex := strIndex + i
@@ -38,10 +31,9 @@ func solveRow3Point5(
 		min := otherRowNumIndexRange[0]
 		max := otherRowNumIndexRange[1] - 1
 
-		// this is awful
-		point := point3{rowIndex, min, max}
+		point := point{rowIndex, min, max}
 
-		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
+		if inRange(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
 			number, err := strconv.Atoi(row[otherRowNumIndexRange[0]:otherRowNumIndexRange[1]])
 			if err != nil {
 				return nil, err
@@ -54,9 +46,9 @@ func solveRow3Point5(
 	return adjacent, nil
 }
 
-func solve3Point5(strings []string) (int, error) {
+func solveAlt(strings []string) (int, error) {
 	acc := 0
-	foundIndexes := pointArr3{}
+	foundIndexes := pointArr{}
 	for strIndex, str := range strings {
 		reg := regexp.MustCompile(`\*`)
 
@@ -72,7 +64,7 @@ func solve3Point5(strings []string) (int, error) {
 
 			adjacent := []int{}
 			for i := -1; i < 2; i += 1 {
-				vals, err := solveRow3Point5(strIndex, i, strings, symbolIndex, foundIndexes, 1)
+				vals, err := solveRowAlt(strIndex, i, strings, symbolIndex, foundIndexes, 1)
 				if err != nil {
 					return 0, err
 				}
@@ -94,9 +86,10 @@ func solve3Point5(strings []string) (int, error) {
 	return acc, nil
 }
 
-func Day3Point5() error {
-	input := Input()
-	res, err := solve3Point5(input)
+func Part2() error {
+	fmt.Println("Please enter the input and then enter \"eoi\" on the next line")
+	input := common.Input()
+	res, err := solveAlt(input)
 	if err != nil {
 		return err
 	}

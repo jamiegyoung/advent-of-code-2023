@@ -1,6 +1,7 @@
-package solutions
+package day2
 
 import (
+	"advent_of_code/common"
 	"bufio"
 	"fmt"
 	"os"
@@ -20,7 +21,7 @@ func generateLimitsMap() (map[string]int, error) {
 	fmt.Println("Please enter a max amount of each color (e.g. 10 red<newline>5 blue<newline>eoi):")
 	fmt.Println("If you just enter eoi it will default to 12 red, 13 green, and 14 blue")
 
-	max := Input()
+	max := common.Input()
 	if len(max) == 0 {
 		return map[string]int{
 			"red":   12,
@@ -33,14 +34,14 @@ func generateLimitsMap() (map[string]int, error) {
 
 	for _, val := range max {
 		if len(val) < 2 {
-			return nil, InputError("Input was too short")
+			return nil, common.InputError("Input was too short")
 		}
 
 		splitVal := strings.Split(val, " ")
 
 		parsedAmount, err := strconv.Atoi(splitVal[0])
 		if err != nil {
-			return nil, InputError("Amount was not a number")
+			return nil, common.InputError("Amount was not a number")
 		}
 
 		limits[splitVal[1]] = parsedAmount
@@ -81,7 +82,7 @@ func Day2() error {
 
 		idMatch := idReg.FindStringSubmatch(gameString)
 		if idMatch == nil {
-			return InputError("Game string was not in the format 'Game <id>'")
+			return common.InputError("Game string was not in the format 'Game <id>'")
 		}
 
 		revealRegs := regexp.MustCompile(`(?:(\d+ \w+)[,;]?)+`)
@@ -96,7 +97,7 @@ func Day2() error {
 
 			foundAmount, err := strconv.Atoi(revealSplit[0])
 			if err != nil {
-				return InputError("Number was not in the format <number> <color>")
+				return common.InputError("Number was not in the format <number> <color>")
 			}
 
 			prevCount, exists := foundMaxColors[revealSplit[1]]
@@ -124,7 +125,7 @@ func Day2() error {
 
 		idInt, err := strconv.Atoi(idMatch[1])
 		if err != nil {
-			return InputError("Game id was not a number")
+			return common.InputError("Game id was not a number")
 		}
 
 		revealSuccessAcc += idInt

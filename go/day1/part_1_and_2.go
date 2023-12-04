@@ -1,6 +1,7 @@
-package solutions
+package day1
 
 import (
+	"advent_of_code/common"
 	"fmt"
 	"strconv"
 	"strings"
@@ -19,14 +20,14 @@ var numberStrings = map[string]int{
 	"nine":  9,
 }
 
-func Day1() error {
+func Part1() error {
 	longestNumberStringCount := 5
 	smallestNumberStringCount := 3
 
 	fmt.Println("Please enter a list of numbers and words seperated by newlines(e.g. 1two3four, 123, one, 1threeighthree):")
 
-	lines := Input()
-	cumSum := 0
+	lines := common.Input()
+	acc := 0
 
 	for _, line := range lines {
 		numericalLettersAcc := []int{}
@@ -69,10 +70,10 @@ func Day1() error {
 		if err != nil {
 			return err
 		}
-		cumSum += joined
+		acc += joined
 	}
 
 	fmt.Println()
-	fmt.Println(cumSum)
+	fmt.Println(acc)
 	return nil
 }

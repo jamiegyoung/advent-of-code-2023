@@ -1,21 +1,13 @@
 package main
 
 import (
+	"advent_of_code/day1"
 	"advent_of_code/solutions"
 	"fmt"
 )
 
-type SelectionError struct {
-	Field string
-	Msg   string
-}
-
-func (e SelectionError) Error() string {
-	return fmt.Sprintln("User inputted, %s: %s", e.Field, e.Msg)
-}
-
 var days = map[string]func() error{
-	"1": solutions.Day1,
+	"1": day1.Part1,
 	"2": solutions.Day2,
 	"3": solutions.Day3,
   "3.5": solutions.Day3Point5,

@@ -1,4 +1,4 @@
-package solutions
+package common
 
 import (
 	"bufio"

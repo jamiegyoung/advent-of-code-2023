@@ -1,43 +1,18 @@
-package solutions
+package day3
 
 import (
+	"advent_of_code/common"
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
-type point3 struct {
-	rowIndex int
-	min      int
-	max      int
-}
-
-type pointArr3 []point3
-
-func (s pointArr3) contains(e point3) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}
-
-func inRange3(min int, max int, min2 int, max2 int) bool {
-	// check if any number is within the range of the other
-	aInB := min >= min2 && min <= max2
-	bInA := min2 >= min && min2 <= max
-
-	return aInB || bInA
-}
-
-func solveRow3(
+func solveRow(
 	strIndex int,
 	i int,
 	strings []string,
 	symbolIndex int,
-	foundIndexes pointArr3,
+	foundIndexes pointArr,
 	acc *int,
 	margin int,
 ) error {
@@ -55,9 +30,9 @@ func solveRow3(
 		min := otherRowNumIndexRange[0]
 		max := otherRowNumIndexRange[1] - 1
 
-		point := point3{rowIndex, min, max}
+		point := point{rowIndex, min, max}
 
-		if inRange3(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
+		if inRange(symbolIndex-margin, symbolIndex+margin, min, max) && !foundIndexes.contains(point) {
 			number, err := strconv.Atoi(row[otherRowNumIndexRange[0]:otherRowNumIndexRange[1]])
 			if err != nil {
 				return err
@@ -71,9 +46,9 @@ func solveRow3(
 	return nil
 }
 
-func solve3(strings []string) error {
+func solve(strings []string) error {
 	acc := 0
-	foundIndexes := pointArr3{}
+	foundIndexes := pointArr{}
 	for strIndex, str := range strings {
 		reg := regexp.MustCompile(`[^0-9.]`)
 
@@ -88,7 +63,7 @@ func solve3(strings []string) error {
 			symbolIndex++
 
 			for i := -1; i < 2; i += 1 {
-				err := solveRow3(strIndex, i, strings, symbolIndex, foundIndexes, &acc, 1)
+				err := solveRow(strIndex, i, strings, symbolIndex, foundIndexes, &acc, 1)
 				if err != nil {
 					return err
 				}
@@ -99,13 +74,8 @@ func solve3(strings []string) error {
 	return nil
 }
 
-func Day3() error {
-	input := Input()
-	// input := []string{
-	// 	"1.2",
-	// 	"@..",
-	// }
-	fmt.Println(strings.Join(input, "\n"))
-	fmt.Println()
-	return solve3(input)
+func Part1() error {
+	fmt.Println("Please enter the input and then enter \"eoi\" on the next line")
+	input := common.Input()
+	return solve(input)
 }
