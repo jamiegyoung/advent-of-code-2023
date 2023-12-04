@@ -2,15 +2,16 @@ package main
 
 import (
 	"advent_of_code/day1"
-	"advent_of_code/solutions"
+	"advent_of_code/day2"
+	"advent_of_code/day3"
 	"fmt"
 )
 
 var days = map[string]func() error{
-	"1": day1.Part1,
-	"2": solutions.Day2,
-	"3": solutions.Day3,
-  "3.5": solutions.Day3Point5,
+	"1":   day1.Day1,
+	"2":   day2.Day2,
+	"3":   day3.Part1,
+	"3.5": day3.Part2,
 }
 
 func main() {

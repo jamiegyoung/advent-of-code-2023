@@ -59,8 +59,7 @@ func solveAlt(strings []string) (int, error) {
 		}
 
 		for _, symbolIndexes := range symbolsIndexes {
-			symbolIndex := symbolIndexes[0] - 1
-			symbolIndex++
+			symbolIndex := symbolIndexes[0]
 
 			adjacent := []int{}
 			for i := -1; i < 2; i += 1 {

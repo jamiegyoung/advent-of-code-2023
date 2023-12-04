@@ -59,8 +59,7 @@ func solve(strings []string) error {
 		}
 
 		for _, symbolIndexes := range symbolsIndexes {
-			symbolIndex := symbolIndexes[0] - 1
-			symbolIndex++
+			symbolIndex := symbolIndexes[0]
 
 			for i := -1; i < 2; i += 1 {
 				err := solveRow(strIndex, i, strings, symbolIndex, foundIndexes, &acc, 1)

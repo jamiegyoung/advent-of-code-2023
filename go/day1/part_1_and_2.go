@@ -20,7 +20,7 @@ var numberStrings = map[string]int{
 	"nine":  9,
 }
 
-func Part1() error {
+func Day1() error {
 	longestNumberStringCount := 5
 	smallestNumberStringCount := 3
 
