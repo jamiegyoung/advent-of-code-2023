@@ -14,6 +14,7 @@ var days = map[string]func() error{
 	"3":   day3.Part1,
 	"3.5": day3.Part2,
   "4": day4.Part1,
+  "4.5": day4.Part2,
 }
 
 func main() {
