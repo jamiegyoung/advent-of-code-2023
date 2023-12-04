@@ -17,6 +17,7 @@ func (e SelectionError) Error() string {
 var days = map[string]func() error{
 	"1": solutions.Day1,
 	"2": solutions.Day2,
+	"3": solutions.Day3,
 }
 
 func main() {
