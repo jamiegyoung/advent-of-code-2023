@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type almanac struct {
@@ -179,6 +180,11 @@ func getSmallestToChan(a almanac, c chan int) {
 	c <- a.getSmallest("seed", "location")
 }
 
+func timeTrack(start time.Time, name string) {
+	elapsed := time.Since(start)
+	fmt.Printf("%s took %s\n", name, elapsed)
+}
+
 func Part2() error {
 	inputString := common.Input()
 	// inputString := strings.Split(`seeds: 79 14 55 13
@@ -226,6 +232,7 @@ func Part2() error {
 
 	remaining := len(inputAlmanacs)
 	fmt.Println("Creating", len(inputAlmanacs), "goroutines")
+  defer timeTrack(time.Now(), "calc")
 	for _, a := range inputAlmanacs {
 		go getSmallestToChan(a, c)
 	}
