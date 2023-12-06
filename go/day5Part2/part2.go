@@ -109,12 +109,23 @@ func parseSeedsString(seedString string) []seedsRange {
 
 	seedNumbers := mapStringsToInts(seedsUntrimmed)
 
-	for i := 0; i < len(seedNumbers); i += 2 {
-		quartOfRange := seedNumbers[i+1] / 10
-		for j := 0; j < 10; j++ {
-			seeds = append(seeds, seedsRange{seedNumbers[i] + quartOfRange*j, quartOfRange})
+	maxSeedNumber := 0
+	for _, seedNumber := range seedNumbers {
+		if seedNumber > maxSeedNumber {
+			maxSeedNumber = seedNumber
 		}
-		seeds = append(seeds, seedsRange{seedNumbers[i], quartOfRange})
+	}
+
+	maxNum := maxSeedNumber / 1000
+
+	for i := 0; i < len(seedNumbers); i += 2 {
+		iterations := seedNumbers[i+1] / maxNum
+		remainder := seedNumbers[i+1] % maxNum
+
+		for j := 0; j < iterations; j++ {
+			seeds = append(seeds, seedsRange{seedNumbers[i] + maxNum*j, maxNum})
+		}
+		seeds = append(seeds, seedsRange{seedNumbers[i] + maxNum*iterations, remainder})
 	}
 
 	return seeds
@@ -211,14 +222,13 @@ func Part2() error {
 
 	c := make(chan int, len(inputAlmanacs))
 
-	// smallest := -1
+	smallest := -1
+
+	remaining := len(inputAlmanacs)
+	fmt.Println("Creating", len(inputAlmanacs), "goroutines")
 	for _, a := range inputAlmanacs {
 		go getSmallestToChan(a, c)
 	}
-
-	smallest := -1
-	threadsRemaining := len(inputAlmanacs)
-	fmt.Println("Threads remaining:", threadsRemaining)
 
 	for range inputAlmanacs {
 		val := <-c
@@ -226,8 +236,8 @@ func Part2() error {
 			smallest = val
 		}
 
-		threadsRemaining -= 1
-		fmt.Println("Threads remaining:", threadsRemaining)
+		remaining -= 1
+		fmt.Println("Waiting for", remaining, "goroutines")
 	}
 	fmt.Println(smallest)
 	return nil
