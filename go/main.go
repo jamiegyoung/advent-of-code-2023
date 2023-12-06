@@ -5,6 +5,8 @@ import (
 	"advent_of_code/day2"
 	"advent_of_code/day3"
 	"advent_of_code/day4"
+	"advent_of_code/day5"
+	"advent_of_code/day5Part2"
 	"fmt"
 )
 
@@ -13,8 +15,10 @@ var days = map[string]func() error{
 	"2":   day2.Day2,
 	"3":   day3.Part1,
 	"3.5": day3.Part2,
-  "4": day4.Part1,
-  "4.5": day4.Part2,
+	"4":   day4.Part1,
+	"4.5": day4.Part2,
+	"5":   day5.Part1,
+	"5.5": day5Part2.Part2,
 }
 
 func main() {
